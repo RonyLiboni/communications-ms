@@ -5,6 +5,16 @@ spring:
     password: guest
     username: guest
     
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 500
+          multiplier: 2
+          max-interval: 5000
+          
+    
   mail:
     host: ${MAIL_HOST:smtp.gmail.com}
     port: ${MAIL_PORT:587}

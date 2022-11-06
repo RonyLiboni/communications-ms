@@ -43,34 +43,39 @@ public class AmqpConfig {
 
 	@Bean
 	public Queue customerCommsQueue() {
-		return QueueBuilder.nonDurable("communication.customer-comms").deadLetterExchange("pagamentos.dlx").build();
+		return QueueBuilder.nonDurable("communication.customer-comms")
+							.deadLetterExchange("pagamentos.dlx")
+							.build();
 	}
 
 	@Bean
 	public Queue customerCommsDlqQueue() {
-		return QueueBuilder.nonDurable("communication.customer-comms-dlq").build();
+		return QueueBuilder.nonDurable("communication.customer-comms-dlq")
+							.build();
 	}
 
 	@Bean
 	public FanoutExchange fanoutExchange() {
-		return ExchangeBuilder.fanoutExchange("communication.ex").build();
+		return ExchangeBuilder.fanoutExchange("communication.ex")
+								.build();
 	}
 
 	@Bean
 	public FanoutExchange deadLetterExchange() {
-		return ExchangeBuilder.fanoutExchange("communication.dlx").build();
+		return ExchangeBuilder.fanoutExchange("communication.dlx")
+								.build();
 	}
 
 	@Bean
 	public Binding bindPagamentoPedido() {
-		return BindingBuilder
-				.bind(customerCommsQueue())
-					.to(fanoutExchange());
+		return BindingBuilder.bind(customerCommsQueue())
+								.to(fanoutExchange());
 	}
 
 	@Bean
 	public Binding bindDlxPagamentoPedido() {
-		return BindingBuilder.bind(customerCommsDlqQueue()).to(deadLetterExchange());
+		return BindingBuilder.bind(customerCommsDlqQueue())
+								.to(deadLetterExchange());
 	}
 
 }
