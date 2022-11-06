@@ -27,4 +27,6 @@ spring:
           starttls:
             enable: ${MAIL_STARTTLS_ENABLE:true} 
     
-    
+
+server:
+  port: 8082

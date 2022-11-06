@@ -43,14 +43,14 @@ public class AmqpConfig {
 
 	@Bean
 	public Queue customerCommsQueue() {
-		return QueueBuilder.nonDurable("communication.customer-comms")
-							.deadLetterExchange("pagamentos.dlx")
+		return QueueBuilder.nonDurable("communication.password-recovery-token")
+							.deadLetterExchange("communication.dlx")
 							.build();
 	}
 
 	@Bean
 	public Queue customerCommsDlqQueue() {
-		return QueueBuilder.nonDurable("communication.customer-comms-dlq")
+		return QueueBuilder.nonDurable("communication.password-recovery-token-dlq")
 							.build();
 	}
 
