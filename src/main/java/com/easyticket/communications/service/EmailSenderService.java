@@ -5,7 +5,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-import com.easyticket.communications.dto.PasswordRecoveryMessageDto;
+
+import com.easyticket.communications.EmailTemplates.EmailTemplate;
+import com.easyticket.communications.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,9 +26,11 @@ public class EmailSenderService {
 	}
 	
 	@RabbitListener(queues = "communication.password-recovery-token")
-	public void newRecoveryTokenCreated(@Payload PasswordRecoveryMessageDto passwordRecoveryMessageDto) {
-		sendEmail(passwordRecoveryMessageDto.getRecipient(),
-				  passwordRecoveryMessageDto.getText(),
-				  passwordRecoveryMessageDto.getSubject());
+	public void newRecoveryTokenCreated(@Payload UserDto messageToBeSent) {
+		sendEmail(messageToBeSent.getUsername(),
+				  String.format(EmailTemplate.NEW_RECOVERY_TOKEN.getBody(), messageToBeSent.getPasswordRecoveryToken()),
+				  EmailTemplate.NEW_RECOVERY_TOKEN.getSubject());
 	}
+	
+	
 }
